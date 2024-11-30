@@ -38,4 +38,14 @@
 ---Description : Its awesome when play doors.
 ]]--
 print("[Lonestar] - Hello World")
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Library/refs/heads/main/Library.txt"))()
+local Window = Library:Window("Lonestar")
+local Tab = {
+Main = Window:Tab("Main"),
+Utilities = Window:Tab("Utilities"),
+Visual = Window:Tab("Visual")
+}
+--💀
+local GamePlay = Tab.Main:CraftPage(1)
+
 
