@@ -37,3 +37,5 @@
 --Credits and edit by : GV, Wearspear and rechedmcvn
 ---Description : Its awesome when play doors.
 ]]--
+print("[Lonestar] - Hello World")
+
