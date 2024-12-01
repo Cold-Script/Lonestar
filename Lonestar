@@ -393,7 +393,7 @@ end)
 end
 Bypass:Toggle("Speed Bypass",false,function(v)
 if v then
-_G.SpeedBypass = 0.22
+_G.SpeedBypass = 0.2
 else
 _G.SpeedBypass = 1.25
 end
@@ -709,4 +709,27 @@ if not fog:GetAttribute("Density") then fog:SetAttribute("Density", fog.Density)
 fog.Density = v and 0 or fog:GetAttribute("Density")
 end
 end)
+end)
+Lighting:Seperator("FPS Booster")
+Lighting:Toggle("Removal-Light",false,function(v)
+if v then
+for _,v in pairs(workspace.CurrentRooms:GetDescendants()) do
+if v.Name == "Chandelier" then
+v:Destroy()
+elseif v.Name == "Light_Fixtures" then
+v:Destroy()
+end
+end
+RemovalsLight = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+for _,v in pairs(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "Chandelier" then
+v:Destroy()
+elseif v.Name == "Light_Fixtures" then
+v:Destroy()
+end
+end
+end)
+else
+RemovalsLight:Disconnect()
+end
 end)
