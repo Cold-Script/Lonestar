@@ -281,32 +281,6 @@ game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 15
 end
 end)
 end)
-Players:Dropdown("JumpPower",{"200","250","300","350"},"",function(v)
-_G.JumpPower = v
-end)
-Players:Toggle("JumpPower",false,function(v)
-_G.EnabledJumpPower = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.EnabledJumpPower then
-game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpPower or 50
-else
-game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-end
-end)
-end)
-Players:Dropdown("HipHeight",{"4","4.5","5"},"",function(v)
-_G.HipHeight = v
-end)
-Players:Toggle("HipHeight",false,function(v)
-_G.EnabledHipHeight = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.EnabledHipHeight then
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.HipHeight or 3
-else
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 3
-end
-end)
-end)
 Players:Seperator("Added")
 Players:Toggle("Noclip",false,function(v)
 _G.Noclip = v
@@ -405,10 +379,10 @@ end
 end
 end)
 Bypass:Seperator("Camera")
-Players:Dropdown("Field Of View",{"90","100","110","120"},"",function(v)
+Bypass:Dropdown("Field Of View",{"90","100","110","120"},"",function(v)
 _G.FieldOfView = v
 end)
-Players:Toggle("Field Of View",false,function(v)
+Bypass:Toggle("Field Of View",false,function(v)
 _G.Field = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.Field then
@@ -418,7 +392,9 @@ workspace.CurrentCamera.FieldOfView = 70
 end
 end)
 end)
-
+Bypass:Button("No Camera Shake",function()
+game:GetService("ReplicatedStorage").RemotesFolder.CamShake:Destroy()
+end)
 
 
 
