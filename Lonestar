@@ -263,7 +263,7 @@ game:GetService("ReplicatedStorage").RemotesFolder.EBF:FireServer()
 end)
 
 
-local Players = Tab.Players:CraftPage(2)
+local Players = Tab.Players:CraftPage(1)
 Players:Seperator("Players")
 Players:Dropdown("Walkspeed",{"20","25","30","35"},"",function(v)
 _G.Speed = v
@@ -277,18 +277,19 @@ else
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 15
 end
 end)
-Players:Dropdown("JumpPower",{"25","30","35","40"},"",function(v)
+end)
+Players:Dropdown("JumpPower",{"75","100","125","150"},"",function(v)
 _G.JumpPower = v
 end)
-end)
-Players:Toggle("Speed",false,function(v)
+Players:Toggle("JumpPower",false,function(v)
 _G.EnabledJumpPower = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.EnabledJumpPower then
-game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpPower or 25
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpPower or 50
 else
-game.Players.LocalPlayer.Character.Humanoid.JumpPower = 25
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
 end
+end)
 end)
 Players:Seperator("Added")
 Players:Toggle("Noclip",false,function(v)
@@ -326,9 +327,31 @@ game.Players.LocalPlayer.Character:SetAttribute("CanJump", _G.Jump)
 end)
 end)
 Players:Toggle("Auto Jump",false,function(v)
+_G.AutoJump = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.AutoJump then
 game.Players.LocalPlayer.Character.Humanoid.Jump = true
 end
 end)
 end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
