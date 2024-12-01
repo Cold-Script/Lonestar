@@ -42,6 +42,7 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-
 local Window = Library:Window("Lonestar")
 local Tab = {
 Main = Window:Tab("Main"),
+Players = Window:Tab("Players"),
 Utilities = Window:Tab("Utilities"),
 Visual = Window:Tab("Visual")
 }
@@ -175,6 +176,13 @@ else
 workspace.FallenPartsDestroyHeight = -50000
 end
 end)
+Rooms:Toggle("No Skybox",false,function(v)
+if v then
+workspace.Camera.SkyboxPart.Transparency = 1
+else
+workspace.Camera.SkyboxPart.Transparency = 0
+end
+end)
 Rooms:Seperator("50")
 Rooms:Button("Prize Library",function()
 local Floor = game:GetService("ReplicatedStorage").GameData.Floor
@@ -252,4 +260,75 @@ end)
 end)
 Rooms:Button("Complete Elevator Electricity",function()
 game:GetService("ReplicatedStorage").RemotesFolder.EBF:FireServer()
+end)
+
+
+local Players = Tab.Players:CraftPage(2)
+Players:Seperator("Players")
+Players:Dropdown("Walkspeed",{"20","25","30","35"},"",function(v)
+_G.Speed = v
+end)
+Players:Toggle("Speed",false,function(v)
+_G.EnabledSpeed = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledSpeed then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.Speed or 15
+else
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 15
+end
+end)
+Players:Dropdown("JumpPower",{"25","30","35","40"},"",function(v)
+_G.JumpPower = v
+end)
+end)
+Players:Toggle("Speed",false,function(v)
+_G.EnabledJumpPower = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledJumpPower then
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpPower or 25
+else
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = 25
+end
+end)
+Players:Seperator("Added")
+Players:Toggle("Noclip",false,function(v)
+_G.Noclip = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character.Collision.CanCollide = not _G.Noclip
+game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = not _G.Noclip
+end)
+end)
+Players:Toggle("No Accessories",false,function(v)
+_G.NoSlow = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character.Head.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftHand.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftLowerArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftUpperArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LowerTorso.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightHand.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightLowerArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightLowerLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightUpperArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightUpperLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.UpperTorso.Massless = not _G.NoSlow;
+end)
+end)
+Players:Toggle("Always Can Jump",false,function(v)
+_G.Jump = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character:SetAttribute("CanJump", _G.Jump)
+end)
+end)
+Players:Toggle("Auto Jump",false,function(v)
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AutoJump then
+game.Players.LocalPlayer.Character.Humanoid.Jump = true
+end
+end)
 end)
