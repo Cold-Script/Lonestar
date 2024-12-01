@@ -48,14 +48,12 @@ Visual = Window:Tab("Visual")
 --[[>Misc<]]--
 local Misc = Tab.Main:CraftPage(1)
 Misc:Seperator("Misc")
-Misc:Dropdown("Select On Death ",{"Lobby","Play Again","Leave","Revive"},"",function(v)
+Misc:Dropdown("Select On Death ",{"Lobby","Leave","Revive"},"",function(v)
 _G.SelectMisc = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.EnabledOnDeath then
 if game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Lobby" then
 game:GetService("ReplicatedStorage").RemotesFolder.Lobby:FireServer()
-elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Play Again" then
-game:GetService("ReplicatedStorage").RemotesFolder.PlayAgain:FireServer()
 elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Leave" then
 game:Shutdown()
 elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Revive" then
@@ -66,4 +64,75 @@ end)
 end)
 Misc:Toggle("Enabled On Death",false,function(v)
 _G.EnabledOnDeath = v
+end)
+Misc:Button("Play Again",function()
+game:GetService("ReplicatedStorage").RemotesFolder.PlayAgain:FireServer()
+end)
+Misc:Seperator("Proximity Prompt")
+Misc:Toggle("Instance Interact",false,function(v)
+_G.InstanceInteract = v
+if _G.InstanceInteract then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.HoldDuration = 0
+end
+end
+InstanceInteract = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.HoldDuration = 0
+end
+end
+end)
+else
+InstanceInteract:Disconnect()
+end
+end)
+Misc:Toggle("Through Interact",false,function(v)
+_G.ThroughInteract = v
+if _G.ThroughInteract then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.RequiresLineOfSight = false
+end
+end
+ThroughInteract = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.RequiresLineOfSight = false
+end
+end
+end)
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.RequiresLineOfSight = true
+end
+end
+ThroughInteract:Disconnect()
+end
+end)
+Misc:Toggle("Remote Interact",false,function(v)
+_G.RemoteInteract = v
+if _G.RemoteInteract then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.MaxActivationDistance = 15
+end
+end
+RemoteInteract = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.MaxActivationDistance = 15
+end
+end
+end)
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.MaxActivationDistance = 5
+end
+end
+RemoteInteract:Disconnect()
+end
 end)
