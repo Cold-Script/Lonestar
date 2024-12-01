@@ -39,7 +39,7 @@
 ]]--
 print("[Lonestar] - Hello World")
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Library/refs/heads/main/Library.txt"))()
-local Window = Library:Window("Lonestar")
+local Window = Library:Window("Lonestar | Thanks Use : " .. game.Players.LocalPlayer.Name)
 local Tab = {
 Main = Window:Tab("Main"),
 Players = Window:Tab("Players"),
@@ -524,12 +524,10 @@ end
 end)
 Anti:Toggle("Anti-Halt",false,function(v)
 _G.AntiHalt = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AntiHalt then
+while _G.AntiHalt do wait(0.1)
 game:GetService("ReplicatedStorage").ClientModules.EntityModules.Shade.Parent = game.Workspace
 else
 game.Workspace.Shade.Parent = game:GetService("ReplicatedStorage").ClientModules.EntityModules
 end
-end)
 end)
 
