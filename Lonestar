@@ -334,9 +334,60 @@ game.Players.LocalPlayer.Character.Humanoid.Jump = true
 end
 end)
 end)
-
-
-
+local Bypass = Tab.Players:CraftPage(2)
+Bypass:Seperator("Bypass")
+local speedBoost, speedBoostFinished, speed = 30, false, false
+if bypass then
+if collisionClone then collisionClone:Destroy() end
+speed = true       
+local originalSpeed = SpeedBypass
+repeat task.wait()
+if not SpeedBypass then
+SpeedBypass:SetValue(true)
+end
+until speedBoostFinished
+SpeedBypass:SetValue(originalSpeed)
+else
+if not collisionClone then
+collisionClone = game.Players.LocalPlayer.Character.Collision:Clone() do
+collisionClone.CanCollide = false
+collisionClone.Massless = true
+collisionClone.Name = "CollisionClone"
+if collisionClone:FindFirstChild("CollisionCrouch") then
+collisionClone.CollisionCrouch:Destroy()
+end   
+collisionClone.Parent = game.Players.LocalPlayer.Character    
+end
+end
+task.spawn(function()  
+while not speedBoostFinished do
+collisionClone.Massless = not collisionClone.Massless
+task.wait(_G.SpeedBypass or 1.25)
+end           
+collisionClone.Massless = true                  
+end)
+end
+Bypass:Toggle("Speed Bypass",false,function(v)
+if v then
+_G.SpeedBypass = 0.22
+else
+_G.SpeedBypass = 1.25
+end
+end)
+Bypass:Toggle("Climb Ladder Bypass",false,function(v)
+if v then
+local progressPart = Instance.new("Part", workspace) do
+progressPart.Anchored = true
+progressPart.CanCollide = false
+progressPart.Name = "Ladder_Bypass"
+progressPart.Transparency = 1
+end
+else
+if workspace:FindFirstChild("_internal_mspaint_acbypassprogress") then 
+workspace:FindFirstChild("_internal_mspaint_acbypassprogress"):Destroy() 
+end
+end
+end)
 
 
 
