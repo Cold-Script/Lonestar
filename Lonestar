@@ -70,6 +70,9 @@ end)
 Misc:Button("Play Again",function()
 game:GetService("ReplicatedStorage").RemotesFolder.PlayAgain:FireServer()
 end)
+Misc:Button("Reset Character",function()
+game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
+end)
 Misc:Seperator("Proximity Prompt")
 Misc:Toggle("Instance Interact",false,function(v)
 _G.InstanceInteract = v
@@ -278,7 +281,7 @@ game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 15
 end
 end)
 end)
-Players:Dropdown("JumpPower",{"75","100","125","150"},"",function(v)
+Players:Dropdown("JumpPower",{"200","250","300","350"},"",function(v)
 _G.JumpPower = v
 end)
 Players:Toggle("JumpPower",false,function(v)
@@ -288,6 +291,19 @@ if _G.EnabledJumpPower then
 game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpPower or 50
 else
 game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end
+end)
+end)
+Players:Dropdown("HipHeight",{"4","4.5","5"},"",function(v)
+_G.HipHeight = v
+end)
+Players:Toggle("HipHeight",false,function(v)
+_G.EnabledHipHeight = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledHipHeight then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.HipHeight or 3
+else
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 3
 end
 end)
 end)
@@ -383,12 +399,25 @@ progressPart.Name = "Ladder_Bypass"
 progressPart.Transparency = 1
 end
 else
-if workspace:FindFirstChild("_internal_mspaint_acbypassprogress") then 
-workspace:FindFirstChild("_internal_mspaint_acbypassprogress"):Destroy() 
+if workspace:FindFirstChild("Ladder_Bypass") then 
+workspace:FindFirstChild("Ladder_Bypass"):Destroy() 
 end
 end
 end)
-
+Bypass:Seperator("Camera")
+Players:Dropdown("Field Of View",{"90","100","110","120"},"",function(v)
+_G.FieldOfView = v
+end)
+Players:Toggle("Field Of View",false,function(v)
+_G.Field = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.Field then
+workspace.CurrentCamera.FieldOfView = _G.FieldOfView or 70
+else
+workspace.CurrentCamera.FieldOfView = 70
+end
+end)
+end)
 
 
 
