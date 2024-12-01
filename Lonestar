@@ -172,6 +172,40 @@ Rooms:Toggle("Closets Exit Fix",false,function(v)
 _G.ClosetsExitFix = v
 end)
 Rooms:Seperator("World")
+game:GetService('ProximityPromptService').PromptTriggered:Connect(function(prompt)
+if _G.EnabledClosetsTransparency then
+if prompt.Parent.Name == 'Wardrobe' or prompt.Parent.Name == 'Large_Locker' or prompt.Parent.Name == 'Backdoor_Wardrobe' or prompt.Parent.Name == 'Retro_Wardrobe' or prompt.Parent.Name == 'Rooms_Locker' or prompt.Parent.Name == 'Toolshed' then
+local ogTransparency = {}
+for i, v in pairs(prompt.Parent:GetDescendants()) do
+pcall(function()
+ogTransparency[v.Name] = v.Transparency
+v.Transparency = _G.ClosetsTransparency or 0.5
+end)
+end
+task.wait(1)
+task.spawn(function()
+repeat
+if not UserInputService:GetFocusedTextBox() and UserInputService:IsKeyDown(exitKeys[1]) or UserInputService:IsKeyDown(exitKeys[2]) or UserInputService:IsKeyDown(exitKeys[3]) or UserInputService:IsKeyDown(exitKeys[4]) then
+for i, v in pairs(prompt.Parent:GetDescendants()) do
+pcall(function()
+v.Transparency = ogTransparency[v.Name]
+end)
+end
+game:GetService("ReplicatedStorage").RemotesFolder.CamLock:FireServer()
+break
+end
+task.wait()
+until false
+end)
+end
+end
+end)
+Rooms:Dropdown("Closets Transparency",{"0.5","0.7","0.9"},"",function(v)
+_G.ClosetsTransparency = v
+end)
+Rooms:Toggle("Closets Transparency",false,function(v)
+_G.EnabledClosetsTransparency = v
+end)
 Rooms:Toggle("No Void Roblox",false,function(v)
 if v then
 workspace.FallenPartsDestroyHeight = 0 / 0
