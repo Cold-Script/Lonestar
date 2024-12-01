@@ -444,11 +444,11 @@ end)
 Anti:Toggle("Anti-Eyes",false,function(v)
 if v then
 if workspace:FindFirstChild("Eyes") then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false);
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(true and 120) or 0,0,false);
 end
 AntiEyes = workspace.ChildAdded:Connect(function(child)
-if child:FindFirstChild("Eyes") then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false);
+if child.Name == "Eyes" then 
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(true and 120) or 0,0,false);
 end
 end)
 else
@@ -458,11 +458,11 @@ end)
 Anti:Toggle("Anti-Lookman",false,function(v)
 if v then
 if workspace:FindFirstChild("BackdoorLookman") then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false);
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(true and 120) or 0,0,false);
 end
 AntiLookman = workspace.ChildAdded:Connect(function(child)
-if child:FindFirstChild("BackdoorLookman") then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false);
+if child.Name == "BackdoorLookman" then 
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(true and 120) or 0,0,false);
 end
 end)
 else
@@ -526,8 +526,127 @@ Anti:Toggle("Anti-Halt",false,function(v)
 _G.AntiHalt = v
 while _G.AntiHalt do wait(0.1)
 game:GetService("ReplicatedStorage").ClientModules.EntityModules.Shade.Parent = game.Workspace
-else
-game.Workspace.Shade.Parent = game:GetService("ReplicatedStorage").ClientModules.EntityModules
 end
 end)
-
+Anti:Toggle("Anti-Banana",false,function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("Part") and v.Name == "BananaPeel" then
+v.CanTouch = false
+end
+end
+AntiBanana = workspace.ChildAdded:Connect(function(child)
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("Part") and v.Name == "BananaPeel" then
+v.CanTouch = false
+end
+end
+end)
+else
+AntiBanana:Disconnect()
+end
+end)
+Anti:Toggle("Anti-Jeff",false,function(v)
+if v then
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Knife.CanTouch = false 
+v.Knife.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Head.CanTouch = false 
+v.Head.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.HumanoidRootPart.CanTouch = false 
+v.HumanoidRootPart.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Arm"].CanTouch = false 
+v["Left Arm"].CanCollide = false
+end 
+end
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Leg"].CanTouch = false 
+v["Left Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Arm"].CanTouch = false 
+v["Right Arm"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Leg"].CanTouch = false 
+v["Right Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do
+if v.Name == "JeffTheKiller" then 
+v.Torso.CanTouch = false 
+v.Torso.CanCollide = false
+end 
+end 
+AntiJeff = workspace.ChildAdded:Connect(function(child)
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Knife.CanTouch = false 
+v.Knife.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Head.CanTouch = false 
+v.Head.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.HumanoidRootPart.CanTouch = false 
+v.HumanoidRootPart.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Arm"].CanTouch = false 
+v["Left Arm"].CanCollide = false
+end 
+end
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Leg"].CanTouch = false 
+v["Left Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Arm"].CanTouch = false 
+v["Right Arm"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Leg"].CanTouch = false 
+v["Right Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do
+if v.Name == "JeffTheKiller" then 
+v.Torso.CanTouch = false 
+v.Torso.CanCollide = false
+end 
+end 
+end)
+else
+AntiJeff:Disconnect()
+end
+end)
