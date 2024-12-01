@@ -45,7 +45,8 @@ Main = Window:Tab("Main"),
 Utilities = Window:Tab("Utilities"),
 Visual = Window:Tab("Visual")
 }
---[[>Misc<]]--
+
+
 local Misc = Tab.Main:CraftPage(1)
 Misc:Seperator("Misc")
 Misc:Dropdown("Select On Death ",{"Lobby","Leave","Revive"},"",function(v)
@@ -134,5 +135,43 @@ v.MaxActivationDistance = 5
 end
 end
 RemoteInteract:Disconnect()
+end
+end)
+
+
+local Rooms = Tab.Main:CraftPage(2)
+Rooms:Seperator("Rooms")
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.RemoteDoors then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door").ClientOpen:FireServer()
+end 
+end)
+end)
+Rooms:Toggle("Remote Doors",false,function(v)
+_G.RemoteDoors = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.FastDoors then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door"):SetAttribute("FastOpen", true)
+end 
+end)
+end)
+Rooms:Toggle("Fast Doors",false,function(v)
+_G.FastDoors = v
+end)
+game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
+if _G.ClosetsExitFix and game.Players.LocalPlayer.Character:GetAttribute("Hiding")==true then 
+game:GetService("ReplicatedStorage").EntityInfo.CamLock:FireServer()
+end 
+end)
+Rooms:Toggle("Closets Exit Fix",false,function(v)
+_G.ClosetsExitFix = v
+end)
+Rooms:Seperator("World")
+Rooms:Toggle("No Void Roblox",false,function(v)
+if v then
+workspace.FallenPartsDestroyHeight = 0 / 0
+else
+workspace.FallenPartsDestroyHeight = -50000
 end
 end)
