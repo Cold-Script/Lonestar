@@ -397,17 +397,139 @@ game:GetService("ReplicatedStorage").RemotesFolder.CamShake:Destroy()
 end)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+local Anti = Tab.Utilities:CraftPage(1)
+Anti:Seperator("Anti-Entity")
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiSnare then
+if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Snare") then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
+if v.Name == "Snare" then 
+v.Hitbox.CanTouch = false
+end 
+end 
+end 
+end 
+end)
+Anti:Toggle("Anti-Snare",false,function(v)
+_G.AntiSnare = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiChandelier then 
+if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("ChandelierObstruction") then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
+if v.Name == "ChandelierObstruction" then 
+v.HurtPart.CanTouch = false
+end 
+end 
+end 
+end 
+end)
+Anti:Toggle("Anti-Chandelier",false,function(v)
+_G.AntiChandelier = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiSeekArms then
+if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Seek_Arm") then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
+if v.Name == "Seek_Arm" then 
+v.AnimatorPart.CanTouch = false
+end 
+end 
+end 
+end 
+end)
+Anti:Toggle("Anti-Seek Arms",false,function(v)
+_G.AntiSeekArms = v
+end)
+Anti:Toggle("Anti-Eyes",false,function(v)
+if v then
+if workspace:FindFirstChild("Eyes") then 
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false);
+end
+AntiEyes = workspace.ChildAdded:Connect(function(child)
+if child:FindFirstChild("Eyes") then 
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false);
+end
+end)
+else
+AntiEyes:Disconnect()
+end
+end)
+Anti:Toggle("Anti-Lookman",false,function(v)
+if v then
+if workspace:FindFirstChild("BackdoorLookman") then 
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false);
+end
+AntiLookman = workspace.ChildAdded:Connect(function(child)
+if child:FindFirstChild("BackdoorLookman") then 
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false);
+end
+end)
+else
+AntiLookman:Disconnect()
+end
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.AntiGiggle then
+for _, room in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetChildren()) do
+if room.Name == "GiggleCeiling" then
+room.Hitbox.CanTouch = false
+end
+end
+end
+end)
+end)
+Anti:Toggle("Anti-Giggle",false,function(v)
+_G.AntiGiggle = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.AntiGloomEggs then
+for _, room in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetChildren()) do
+if room.Name == "GloomPile" then
+room.Egg.CanTouch = false
+end
+end
+end
+end)
+end)
+Anti:Toggle("Anti-Gloom Eggs",false,function(v)
+_G.AntiGloomEggs = v
+end)
+Anti:Toggle("Anti-Screech",false,function(v)
+if v then
+game:GetService("ReplicatedStorage").RemotesFolder.Screech.Name = "_Screech"
+else
+game:GetService("ReplicatedStorage").RemotesFolder._Screech.Name = "Screech"
+end
+end)
+Anti:Toggle("Anti-A90",false,function(v)
+if v then
+game:GetService("ReplicatedStorage").RemotesFolder.A90.Name = "_A90"
+game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = nil
+else
+game:GetService("ReplicatedStorage").RemotesFolder._A90.Name = "A90"
+game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = game.Players.LocalPlayers.PlayerGui.MainUI.Jumpscare
+end
+end)
+Anti:Toggle("Anti-Dread",false,function(v)
+if v then
+game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Dread.Parent = workspace
+game:GetService("ReplicatedStorage").RemotesFolder.Dread.Name = "_Dread"
+else
+workspace.Jumpscare_Dread.Parent = game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare
+game:GetService("ReplicatedStorage").RemotesFolder._Dread.Name = "Dread"
+end
+end)
+Anti:Toggle("Anti-Halt",false,function(v)
+_G.AntiHalt = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiHalt then
+game:GetService("ReplicatedStorage").ClientModules.EntityModules.Shade.Parent = game.Workspace
+else
+game.Workspace.Shade.Parent = game:GetService("ReplicatedStorage").ClientModules.EntityModules
+end
+end)
+end)
 
