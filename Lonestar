@@ -45,7 +45,25 @@ Main = Window:Tab("Main"),
 Utilities = Window:Tab("Utilities"),
 Visual = Window:Tab("Visual")
 }
---💀
-local GamePlay = Tab.Main:CraftPage(1)
-
-
+--[[>Misc<]]--
+local Misc = Tab.Main:CraftPage(1)
+Misc:Seperator("Misc")
+Misc:Dropdown("Select On Death ",{"Lobby","Play Again","Leave","Revive"},"",function(v)
+_G.SelectMisc = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledOnDeath then
+if game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Lobby" then
+game:GetService("ReplicatedStorage").RemotesFolder.Lobby:FireServer()
+elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Play Again" then
+game:GetService("ReplicatedStorage").RemotesFolder.PlayAgain:FireServer()
+elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Leave" then
+game:Shutdown()
+elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Revive" then
+game:GetService("ReplicatedStorage").RemotesFolder.Revive:FireServer()
+end
+end
+end)
+end)
+Misc:Toggle("Enabled On Death",false,function(v)
+_G.EnabledOnDeath = v
+end)
