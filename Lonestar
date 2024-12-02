@@ -38,8 +38,9 @@
 ---Description : Its awesome when play doors.
 ]]--
 print("[Lonestar] - Hello World")
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Library/refs/heads/main/Library.txt"))()
-local Window = Library:Window("Lonestar | Thanks Use : " .. game.Players.LocalPlayer.Name)
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Library/refs/heads/main/Library.txt"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Warning/refs/heads/main/Warning.lua"))()
+local Window = Lib:Window("Lonestar | Thanks Use : " .. game.Players.LocalPlayer.Name)
 local Tab = {
 Main = Window:Tab("Main"),
 Players = Window:Tab("Players"),
@@ -200,7 +201,7 @@ end)
 end
 end
 end)
-Rooms:Dropdown("Closets Transparency",{"0.5","0.7","0.9"},"",function(v)
+Rooms:Dropdown("Closets Transparency",{"0.5","0.7","0.9"},"0.5",function(v)
 _G.ClosetsTransparency = v
 end)
 Rooms:Toggle("Closets Transparency",false,function(v)
@@ -732,4 +733,155 @@ end)
 else
 RemovalsLight:Disconnect()
 end
+end)
+Lighting:Toggle("Removal-Bat",false,function(v)
+if v then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v:IsA("Model") and v.Name == "HangingHalloweenDecor" then
+v:Destroy()
+end
+end
+NoBat = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v:IsA("Model") and v.Name == "HangingHalloweenDecor" then
+v:Destroy()
+end
+end
+end)
+else
+NoBat:Disconnect()
+end
+end)
+Lighting:Seperator("Notifiaction")
+_G.AlertVolume = 5
+Lighting:Toggle("Notification Entity",false,function(v)
+if v then
+local Entity = {"SeekNewCloneMoving","SeekMoving","BackdoorLookman","BackdoorRush","GloomPile","Eyes","JeffTheKiller","RushMoving","AmbushMoving","Snare","A60","A120"}
+addconnect = workspace.ChildAdded:Connect(function(v)
+if table.find(Entity,v.Name) then
+repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 1000 or not v:IsDescendantOf(workspace)
+if v:IsDescendantOf(workspace) then
+if v.Name == "RushMoving" then
+Library:Notify("Entity 'Rush' has spawn,\nhide in closets now!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "AmbushMoving" then
+Library:Notify("Entity 'Ambush' has spawn,\nhide in closets now!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "A60" then
+Library:Notify("Entity 'A60' has spawn,\nhide in a locker!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "A120" then
+Library:Notify("Entity 'A120' has spawn,\nhide in a locker!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "JeffTheKiller" then
+Library:Notify("Entity 'JeffTheKiller' has spawn,\ncareful with it!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "Eyes" then
+Library:Notify("Entity 'Eyes' has spawn,\ndont look at it!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "GloomPile" then
+Library:Notify("Entity 'GloomPile' has spawn,\noff light to survival!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "BackdoorRush" then
+Library:Notify("Entity 'Blitz' has spawn,\nhide in closets now!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "BackdoorLookman" then
+Library:Notify("Entity 'Lookman' has spawn,\nlook under side!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "SeekMoving" then
+Library:Notify("Seek Chase,\ngoodluck for you in chase!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "SeekNewCloneMoving" then
+Library:Notify("Seek Chase,\ngoodluck for you in chase!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+end
+end
+end
+end)
+else
+addconnect:Disconnect()
+end
+end)
+Lighting:Toggle("Play Sound",false,function(v)
+_G.SoundAlert = v
+end)
+Lighting:Dropdown("Volume Notification",{"1","2","3","4","5"},"5",function(v)
+_G.AlertVolume = v
 end)
