@@ -477,12 +477,16 @@ _G.AntiSeekArms = v
 end)
 Anti:Toggle("Anti-Eyes",false,function(v)
 if v then
-if workspace:FindFirstChild("Eyes") then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(true and 120) or 0,0,false);
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Eyes" then  
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false)
+end
 end
 AntiEyes = workspace.ChildAdded:Connect(function(child)
-if child.Name == "Eyes" then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(true and 120) or 0,0,false);
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Eyes" then  
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false)
+end
 end
 end)
 else
@@ -491,12 +495,16 @@ end
 end)
 Anti:Toggle("Anti-Lookman",false,function(v)
 if v then
-if workspace:FindFirstChild("BackdoorLookman") then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(true and 120) or 0,0,false);
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "BackdoorLookman" then  
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false)
+end
 end
 AntiLookman = workspace.ChildAdded:Connect(function(child)
-if child.Name == "BackdoorLookman" then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(true and 120) or 0,0,false);
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "BackdoorLookman" then  
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,120,0,false)
+end
 end
 end)
 else
