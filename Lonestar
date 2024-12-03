@@ -402,6 +402,7 @@ _G.SpeedBypass = 1.25
 end
 end)
 Bypass:Toggle("Climb Ladder Bypass",false,function(v)
+_G.LadderBypass = v
 if v then
 local progressPart = Instance.new("Part", workspace) do
 progressPart.Anchored = true
@@ -409,11 +410,25 @@ progressPart.CanCollide = false
 progressPart.Name = "Ladder_Bypass"
 progressPart.Transparency = 1
 end
+if _G.LadderBypass and game.Players.LocalPlayer.Character:GetAttribute("Climbing") then
+task.wait(1)
+game.Players.LocalPlayer.Character:SetAttribute("Climbing", false)
+end
 else
 if workspace:FindFirstChild("Ladder_Bypass") then 
 workspace:FindFirstChild("Ladder_Bypass"):Destroy() 
 end
 end
+end)
+Bypass:Toggle("Crouch Spoof",false,function(v)
+_G.CrouchSpoof = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.CrouchSpoof then
+game.Players.LocalPlayer.Character:SetAttribute("Crouch", true)
+else
+game.Players.LocalPlayer.Character:SetAttribute("Crouch", false)
+end
+end)
 end)
 Bypass:Seperator("Camera")
 Bypass:Dropdown("Field Of View",{"90","100","110","120"},"",function(v)
@@ -478,13 +493,10 @@ end)
 Anti:Toggle("Anti-Seek Arms",false,function(v)
 _G.AntiSeekArms = v
 end)
-if workspace:FindFirstChild("Eyes") and _G.AntiEyes then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(_G.AntiEyes and 120) or 0 ,0,false);
-end 
 game:GetService("Workspace").DescendantAdded:Connect(function()
 if not _G.AntiEyes then return end
 if _G.AntiEyes then 
-if workspace:FindFirstChild("Eyes") then 
+if workspace:WaitForChild("Eyes") then 
 game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(_G.AntiEyes and 120) or 0 ,0,false);
 end 
 end 
@@ -492,13 +504,10 @@ end)
 Anti:Toggle("Anti-Eyes",false,function(v)
 _G.AntiEyes = v
 end)
-if workspace:FindFirstChild("BackdoorLookman") and _G.AntiLookman then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(_G.AntiLookman and 120) or 0 ,0,false);
-end 
 game:GetService("Workspace").DescendantAdded:Connect(function()
 if not _G.AntiLookman then return end
 if _G.AntiLookman then 
-if workspace:FindFirstChild("BackdoorLookman") then 
+if workspace:WaitForChild("BackdoorLookman") then 
 game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(_G.AntiLookman and 120) or 0 ,0,false);
 end 
 end 
@@ -922,26 +931,42 @@ end)
 ESP:Toggle("Keys",false,function(v)
 _G.ESPKey = v
 if v then
-local function setup(room)
-local Key = room:WaitForChild("KeyObtain")
-local KeyESP = LibraryESP:AddESP(Key,"Key",Color3.fromRGB(80, 255, 175),25,"Key")
-table.insert({},KeyESP)
-Key.AncestryChanged:Connect(function()
-KeyESP:Destroy()
-end)
+function setup(room)
+LibraryESP:AddESP(room,"Key",Color3.fromRGB(80, 255, 175),25,"KeyESP")
 end
-KeyINF = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+KeyESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+if room.Name == "KeyObtain" then
 setup(room)
+end
 end)
-for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-if room:FindFirstChild("Assets") then
+for i,room in pairs(workspace.CurrentRooms:GetDescendants()) do
+if room.Name == "KeyObtain" then
 setup(room) 
 end
 end
 repeat task.wait() until not _G.ESPKey
-KeyINF:Disconnect()
-for i,v in pairs({}) do
-v:Destroy()
-end 
+KeyESP:Disconnect()
+LibraryESP:Delete("KeyESP")
+end
+end)
+ESP:Toggle("Books",false,function(v)
+_G.ESPBooks = v
+if v then
+function setup(room)
+LibraryESP:AddESP(room,"Book",Color3.fromRGB(255, 0, 255),25,"BookESP")
+end
+BookESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+if room.Name == "LiveHintBook" then
+setup(room)
+end
+end)
+for i,room in pairs(workspace.CurrentRooms:GetDescendants()) do
+if room.Name == "LiveHintBook" then
+setup(room) 
+end
+end
+repeat task.wait() until not _G.ESPBooks
+BookESP:Disconnect()
+LibraryESP:Delete("BookESP")
 end
 end)
