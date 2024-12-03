@@ -895,7 +895,7 @@ if v then
 local function setup(room)
 local Door = room:WaitForChild("Door"):WaitForChild("Door")
 task.wait(0.1)
-local DoorESP = LibraryESP:AddESP(Door,"Door",Color3.fromRGB(80, 255, 175),15,"Door")
+local DoorESP = LibraryESP:AddESP(Door,"Door",Color3.fromRGB(80, 255, 175),25,"DoorESP")
 table.insert({},DoorESP)
 Door:WaitForChild("Open").Played:Connect(function()
 DoorESP:Destroy()
@@ -924,7 +924,7 @@ _G.ESPKey = v
 if v then
 local function setup(room)
 local Key = room:WaitForChild("KeyObtain")
-local KeyESP = LibraryESP:AddESP(Key,"Key",Color3.fromRGB(80, 255, 175),15,"Key")
+local KeyESP = LibraryESP:AddESP(Key,"Key",Color3.fromRGB(80, 255, 175),25,"Key")
 table.insert({},KeyESP)
 Key.AncestryChanged:Connect(function()
 KeyESP:Destroy()
