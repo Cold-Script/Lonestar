@@ -424,11 +424,9 @@ Bypass:Toggle("Crouch Spoof",false,function(v)
 _G.CrouchSpoof = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.CrouchSpoof then
-game.Players.LocalPlayer.Character.Humanoid:SetAttribute("Crouching", true)
-game:GetService("ReplicatedStorage").EntityInfo.Crouch:FireServer(true)
+game:GetService("ReplicatedStorage").RemotesFolder.Crouch:FireServer(true)
 else
-game.Players.LocalPlayer.Character.Humanoid:SetAttribute("Crouching", false)
-game:GetService("ReplicatedStorage").EntityInfo.Crouch:FireServer(false)
+game:GetService("ReplicatedStorage").RemotesFolder.Crouch:FireServer(false)
 end
 end)
 end)
@@ -900,6 +898,7 @@ _G.AlertVolume = v
 end)
 local ESP = Tab.Visual:CraftPage(1)
 ESP:Seperator("ESP")
+
 ESP:Toggle("Doors",false,function(v)
 _G.ESPDoor = v
 if v then
@@ -930,6 +929,7 @@ v:Destroy()
 end 
 end
 end)
+
 ESP:Toggle("Keys",false,function(v)
 _G.ESPKey = v
 if v then
@@ -951,6 +951,7 @@ KeyESP:Disconnect()
 LibraryESP:Delete("KeyESP")
 end
 end)
+
 ESP:Toggle("Books",false,function(v)
 _G.ESPBooks = v
 if v then
@@ -970,5 +971,27 @@ end
 repeat task.wait() until not _G.ESPBooks
 BookESP:Disconnect()
 LibraryESP:Delete("BookESP")
+end
+end)
+
+ESP:Toggle("Breakers",false,function(v)
+_G.ESPBreakers = v
+if v then
+function setup(room)
+LibraryESP:AddESP(room,"Breaker",Color3.fromRGB(255, 0, 255),25,"BreakerESP")
+end
+BreakerESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+if room.Name == "LiveBreakerPolePickup" then
+setup(room)
+end
+end)
+for i,room in pairs(workspace.CurrentRooms:GetDescendants()) do
+if room.Name == "LiveBreakerPolePickup" then
+setup(room) 
+end
+end
+repeat task.wait() until not _G.ESPBreakers
+BreakerESP:Disconnect()
+LibraryESP:Delete("BreakerESP")
 end
 end)
