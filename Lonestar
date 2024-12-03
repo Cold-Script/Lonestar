@@ -424,9 +424,11 @@ Bypass:Toggle("Crouch Spoof",false,function(v)
 _G.CrouchSpoof = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.CrouchSpoof then
-game.Players.LocalPlayer.Character:SetAttribute("Crouch", true)
+game.Players.LocalPlayer.Character.Humanoid:SetAttribute("Crouching", true)
+game:GetService("ReplicatedStorage").EntityInfo.Crouch:FireServer(true)
 else
-game.Players.LocalPlayer.Character:SetAttribute("Crouch", false)
+game.Players.LocalPlayer.Character.Humanoid:SetAttribute("Crouching", false)
+game:GetService("ReplicatedStorage").EntityInfo.Crouch:FireServer(false)
 end
 end)
 end)
