@@ -1065,3 +1065,43 @@ BreakerESP:Disconnect()
 LibraryESP:Delete("BreakerESP")
 end
 end)
+
+ESP:Toggle("Closets",false,function(v)
+_G.ESPCloset = v
+if v then
+local function check(v)
+if v:IsA("Model") then
+task.wait(0.1)
+if (v.Name == "Wardrobe" or v.Name == "Bed" or v.Name == "Backdoor_Wardrobe" or v.Name == "Toolshed") then
+local ClosetESP = LibraryESP:AddESP(v.PrimaryPart,"Closet",Color3.fromRGB(145,100,25),25,"ClosetESP")
+elseif (v.Name == "Rooms_Locker" or v.Name == "Rooms_Locker_Fridge") then
+local ClosetESP = LibraryESP:AddESP(v.PrimaryPart,"Closet",Color3.fromRGB(145,100,25),25,"ClosetESP")
+end
+end
+end
+local function setup(room)
+local assets = room:WaitForChild("Assets")            
+if assets then
+INFCloset = assets.DescendantAdded:Connect(function(v)
+check(v) 
+end)             
+for i,v in pairs(assets:GetDescendants()) do
+check(v)
+end
+task.spawn(function()
+repeat task.wait() until not _G.ESPCloset
+INFCloset:Disconnect()  
+end) 
+end 
+end        
+INFCloset = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+setup(room)
+end)     
+for i,v in pairs(workspace.CurrentRooms:GetChildren()) do
+setup(room) 
+end     
+repeat task.wait() until not _G.ESPCloset
+INFCloset:Disconnect()    
+LibraryESP:Delete("ClosetESP")
+end
+end)
