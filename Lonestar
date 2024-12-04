@@ -979,7 +979,27 @@ DoorINF:Disconnect()
 LibraryESP:Delete("DoorESP")
 end
 end)
-
+ESP:Toggle("Lever",false,function(v)
+_G.ESPLever = v
+if v then
+function setup(room)
+LibraryESP:AddESP(room,"Lever Gate",Color3.fromRGB(100,100,100),25,"LeverESP")
+end
+LeverESP = workspace.ChildAdded:Connect(function(room)
+if room.Name == "LeverForGate" then
+setup(room)
+end
+end)
+for i,room in pairs(workspace.CurrentRooms:GetDescendants()) do
+if room.Name == "LeverForGate" then
+setup(room) 
+end
+end
+repeat task.wait() until not _G.ESPLever
+LeverESP:Disconnect()
+LibraryESP:Delete("LeverESP")
+end
+end)
 ESP:Toggle("Keys",false,function(v)
 _G.ESPKey = v
 if v then
