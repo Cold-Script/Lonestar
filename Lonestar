@@ -493,22 +493,22 @@ end)
 Anti:Toggle("Anti-Seek Arms",false,function(v)
 _G.AntiSeekArms = v
 end)
-game:GetService("Workspace").DescendantAdded:Connect(function()
+game:GetService("Workspace").DescendantAdded:Connect(function(child)
 if not _G.AntiEyes then return end
 if _G.AntiEyes then 
 if workspace:FindFirstChild("Eyes") then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(_G.AntiEyes and 120) or 0 ,0,false);
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,_G.AntiEyes and 120 or 0 ,0,false)
 end 
 end 
 end)
 Anti:Toggle("Anti-Eyes",false,function(v)
 _G.AntiEyes = v
 end)
-game:GetService("Workspace").DescendantAdded:Connect(function()
+game:GetService("Workspace").DescendantAdded:Connect(function(child)
 if not _G.AntiLookman then return end
 if _G.AntiLookman then 
-if workspace:FindFristChild("BackdoorLookman") then 
-game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(_G.AntiLookman and 120) or 0 ,0,false);
+if workspace:FindFirstChild("Eyes") then 
+game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,_G.AntiLookman and 120 or 0 ,0,false)
 end 
 end 
 end)
@@ -980,65 +980,59 @@ LibraryESP:Delete("DoorESP")
 end
 end)
 ESP:Toggle("Lever",false,function(v)
-_G.ESPLever = v
-if v then
-function setup(room)
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "LeverForGate" then
 LibraryESP:AddESP(room,"Lever Gate",Color3.fromRGB(100,100,100),25,"LeverESP")
-end
-LeverESP = workspace.ChildAdded:Connect(function(room)
-if room.Name == "LeverForGate" then
-setup(room)
-end
+end		
+end					
+LeverESP = workspace.ChildAdded:Connect(function(v)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "LeverForGate" then
+LibraryESP:AddESP(room,"Lever Gate",Color3.fromRGB(100,100,100),25,"LeverESP")
+end		
+end	                        
 end)
-for i,room in pairs(workspace.CurrentRooms:GetDescendants()) do
-if room.Name == "LeverForGate" then
-setup(room) 
-end
-end
-repeat task.wait() until not _G.ESPLever
+else
 LeverESP:Disconnect()
 LibraryESP:Delete("LeverESP")
 end
 end)
 ESP:Toggle("Keys",false,function(v)
-_G.ESPKey = v
-if v then
-function setup(room)
-LibraryESP:AddESP(room,"Key",Color3.fromRGB(80, 255, 175),25,"KeyESP")
-end
-KeyESP = workspace.ChildAdded:Connect(function(room)
-if room.Name == "KeyObtain" then
-setup(room)
-end
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "KeyObtain" then
+LibraryESP:AddESP(v,"Key",Color3.fromRGB(80, 255, 175),25,"KeyESP")
+end		
+end					
+KeyESP = workspace.ChildAdded:Connect(function(v)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "KeyObtain" then
+LibraryESP:AddESP(v,"Key",Color3.fromRGB(80, 255, 175),25,"KeyESP")
+end		
+end	                        
 end)
-for i,room in pairs(workspace.CurrentRooms:GetDescendants()) do
-if room.Name == "KeyObtain" then
-setup(room) 
-end
-end
-repeat task.wait() until not _G.ESPKey
+else
 KeyESP:Disconnect()
 LibraryESP:Delete("KeyESP")
 end
 end)
 
 ESP:Toggle("Books",false,function(v)
-_G.ESPBooks = v
-if v then
-function setup(room)
-LibraryESP:AddESP(room,"Book",Color3.fromRGB(255, 0, 255),25,"BookESP")
-end
-BookESP = workspace.ChildAdded:Connect(function(room)
-if room.Name == "LiveHintBook" then
-setup(room)
-end
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+LibraryESP:AddESP(v,"Book",Color3.fromRGB(255, 0, 255),25,"BookESP")
+end		
+end					
+BookESP = workspace.ChildAdded:Connect(function(v)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+LibraryESP:AddESP(v,"Book",Color3.fromRGB(255, 0, 255),25,"BookESP")
+end		
+end	                        
 end)
-for i,room in pairs(workspace.CurrentRooms:GetDescendants()) do
-if room.Name == "LiveHintBook" then
-setup(room) 
-end
-end
-repeat task.wait() until not _G.ESPBooks
+else
 BookESP:Disconnect()
 LibraryESP:Delete("BookESP")
 end
@@ -1073,9 +1067,9 @@ local function check(v)
 if v:IsA("Model") then
 task.wait(0.1)
 if (v.Name == "Wardrobe" or v.Name == "Bed" or v.Name == "Backdoor_Wardrobe" or v.Name == "Toolshed") then
-local ClosetESP = LibraryESP:AddESP(v.PrimaryPart,"Closet",Color3.fromRGB(145,100,25),25,"ClosetESP")
+local ClosetESP = LibraryESP:AddESP(v,"Closet",Color3.fromRGB(145,100,25),25,"ClosetESP")
 elseif (v.Name == "Rooms_Locker" or v.Name == "Rooms_Locker_Fridge") then
-local ClosetESP = LibraryESP:AddESP(v.PrimaryPart,"Closet",Color3.fromRGB(145,100,25),25,"ClosetESP")
+local ClosetESP = LibraryESP:AddESP(v,"Closet",Color3.fromRGB(145,100,25),25,"ClosetESP")
 end
 end
 end
