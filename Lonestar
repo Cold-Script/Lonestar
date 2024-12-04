@@ -321,9 +321,11 @@ end)
 Players:Seperator("Added")
 Players:Toggle("Eat Candy",false,function(v)
 _G.EatCandy = v
-while _G.EatCandy do wait(0.001)
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EatCandy then
 game.Players.LocalPlayer.Character.Candy.Remote:FireServer()
 end
+end)
 end)
 Players:Toggle("Noclip",false,function(v)
 _G.Noclip = v
@@ -490,9 +492,9 @@ _G.AntiDupe = v
 while _G.AntiDupe do wait(0.1)
 for _, v in (workspace:GetDescendants()) do
 if v.Name == "DoorFake" and v:IsA("Model") then
-v.Hidden.CanTouch = not v
+v.Hidden.CanTouch = not _G.AntiDupe
 if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
-v.LockPart.UnlockPrompt.Enabled = not v
+v.LockPart.UnlockPrompt.Enabled = not _G.AntiDupe
 end
 end
 end
