@@ -507,7 +507,7 @@ end)
 game:GetService("Workspace").DescendantAdded:Connect(function()
 if not _G.AntiLookman then return end
 if _G.AntiLookman then 
-if workspace:ForFristChild("BackdoorLookman") then 
+if workspace:FindFristChild("BackdoorLookman") then 
 game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(_G.AntiLookman and 120) or 0 ,0,false);
 end 
 end 
@@ -740,7 +740,7 @@ workspace.Terrain.WaterTransparency = true and 0 or 1
 workspace.Terrain.WaterWaveSize = true and 0 or 0.05
 workspace.Terrain.WaterWaveSpeed = true and 0 or 8
 game.Lighting.GlobalShadows = not true
-LowQuality = workspace.ChildAdded:Connect(function(child)
+LowQuality = workspace.CurrentRooms.ChildAdded:Connect(function(child)
 for _, object in pairs(workspace:GetDescendants()) do
 if object:IsA("BasePart") then
 if not object:GetAttribute("Material") then object:SetAttribute("Material", object.Material) end
@@ -986,7 +986,7 @@ if v then
 function setup(room)
 LibraryESP:AddESP(room,"Key",Color3.fromRGB(80, 255, 175),25,"KeyESP")
 end
-KeyESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+KeyESP = workspace.ChildAdded:Connect(function(room)
 if room.Name == "KeyObtain" then
 setup(room)
 end
@@ -1008,7 +1008,7 @@ if v then
 function setup(room)
 LibraryESP:AddESP(room,"Book",Color3.fromRGB(255, 0, 255),25,"BookESP")
 end
-BookESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+BookESP = workspace.ChildAdded:Connect(function(room)
 if room.Name == "LiveHintBook" then
 setup(room)
 end
@@ -1030,7 +1030,7 @@ if v then
 function setup(room)
 LibraryESP:AddESP(room,"Breaker",Color3.fromRGB(255, 0, 255),25,"BreakerESP")
 end
-BreakerESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+BreakerESP = workspace.ChildAdded:Connect(function(room)
 if room.Name == "LiveBreakerPolePickup" then
 setup(room)
 end
