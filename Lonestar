@@ -177,7 +177,7 @@ end)
 Rooms:Seperator("World")
 game:GetService('ProximityPromptService').PromptTriggered:Connect(function(prompt)
 if _G.EnabledClosetsTransparency then
-if prompt.Parent.Name == 'Wardrobe' or prompt.Parent.Name == 'Large_Locker' or prompt.Parent.Name == 'Backdoor_Wardrobe' or prompt.Parent.Name == 'Retro_Wardrobe' or prompt.Parent.Name == 'Rooms_Locker' or prompt.Parent.Name == 'Toolshed' then
+if prompt.Parent.Name == 'Bed' or prompt.Parent.Name == 'Wardrobe' or prompt.Parent.Name == 'Large_Locker' or prompt.Parent.Name == 'Backdoor_Wardrobe' or prompt.Parent.Name == 'RetroWardrobe' or prompt.Parent.Name == 'Rooms_Locker' or prompt.Parent.Name == 'Toolshed' then
 local ogTransparency = {}
 for i, v in pairs(prompt.Parent:GetDescendants()) do
 pcall(function()
@@ -197,13 +197,13 @@ end
 game:GetService("ReplicatedStorage").RemotesFolder.CamLock:FireServer()
 break
 end
-task.wait()
+task.wait(1)
 until false
 end)
 end
 end
 end)
-Rooms:Dropdown("Closets Transparency",{"0.5","0.7","0.9"},"0.5",function(v)
+Rooms:Dropdown("Closets Transparency",{"0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1"},"0.5",function(v)
 _G.ClosetsTransparency = v
 end)
 Rooms:Toggle("Closets Transparency",false,function(v)
@@ -431,7 +431,7 @@ end
 end)
 end)
 Bypass:Seperator("Camera")
-Bypass:Dropdown("Field Of View",{"90","100","110","120"},"",function(v)
+Bypass:Dropdown("Field Of View",{"80","90","100","110","120"},"",function(v)
 _G.FieldOfView = v
 end)
 Bypass:Toggle("Field Of View",false,function(v)
@@ -496,7 +496,7 @@ end)
 game:GetService("Workspace").DescendantAdded:Connect(function()
 if not _G.AntiEyes then return end
 if _G.AntiEyes then 
-if workspace:WaitForChild("Eyes") then 
+if workspace:FindFirstChild("Eyes") then 
 game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(_G.AntiEyes and 120) or 0 ,0,false);
 end 
 end 
@@ -507,7 +507,7 @@ end)
 game:GetService("Workspace").DescendantAdded:Connect(function()
 if not _G.AntiLookman then return end
 if _G.AntiLookman then 
-if workspace:WaitForChild("BackdoorLookman") then 
+if workspace:ForFristChild("BackdoorLookman") then 
 game:GetService("ReplicatedStorage").RemotesFolder.MotorReplication:FireServer(0,(_G.AntiLookman and 120) or 0 ,0,false);
 end 
 end 
@@ -723,6 +723,59 @@ end
 end)
 end)
 Lighting:Seperator("FPS Booster")
+Lighting:Toggle("Low Quality",false,function(v)
+if v then
+for _, object in pairs(workspace:GetDescendants()) do
+if object:IsA("BasePart") then
+if not object:GetAttribute("Material") then object:SetAttribute("Material", object.Material) end
+if not object:GetAttribute("Reflectance") then object:SetAttribute("Reflectance", object.Reflectance) end
+object.Material = true and Enum.Material.Plastic or object:GetAttribute("Material")
+object.Reflectance = true and 0 or object:GetAttribute("Reflectance")
+elseif object:IsA("Decal") then
+if not object:GetAttribute("Transparency") then object:SetAttribute("Transparency", object.Transparency) end
+end
+end
+workspace.Terrain.WaterReflectance = true and 0 or 1
+workspace.Terrain.WaterTransparency = true and 0 or 1
+workspace.Terrain.WaterWaveSize = true and 0 or 0.05
+workspace.Terrain.WaterWaveSpeed = true and 0 or 8
+game.Lighting.GlobalShadows = not true
+LowQuality = workspace.ChildAdded:Connect(function(child)
+for _, object in pairs(workspace:GetDescendants()) do
+if object:IsA("BasePart") then
+if not object:GetAttribute("Material") then object:SetAttribute("Material", object.Material) end
+if not object:GetAttribute("Reflectance") then object:SetAttribute("Reflectance", object.Reflectance) end
+object.Material = true and Enum.Material.Plastic or object:GetAttribute("Material")
+object.Reflectance = true and 0 or object:GetAttribute("Reflectance")
+elseif object:IsA("Decal") then
+if not object:GetAttribute("Transparency") then object:SetAttribute("Transparency", object.Transparency) end
+end
+end
+workspace.Terrain.WaterReflectance = true and 0 or 1
+workspace.Terrain.WaterTransparency = true and 0 or 1
+workspace.Terrain.WaterWaveSize = true and 0 or 0.05
+workspace.Terrain.WaterWaveSpeed = true and 0 or 8
+game.Lighting.GlobalShadows = not true
+end)
+else
+LowQuality:Disconnect()
+for _, object in pairs(workspace:GetDescendants()) do
+if object:IsA("BasePart") then
+if not object:GetAttribute("Material") then object:SetAttribute("Material", object.Material) end
+if not object:GetAttribute("Reflectance") then object:SetAttribute("Reflectance", object.Reflectance) end
+object.Material = false and Enum.Material.Plastic or object:GetAttribute("Material")
+object.Reflectance = false and 0 or object:GetAttribute("Reflectance")
+elseif object:IsA("Decal") then
+if not object:GetAttribute("Transparency") then object:SetAttribute("Transparency", object.Transparency) end
+end
+end
+workspace.Terrain.WaterReflectance = false and 0 or 1
+workspace.Terrain.WaterTransparency = false and 0 or 1
+workspace.Terrain.WaterWaveSize = false and 0 or 0.05
+workspace.Terrain.WaterWaveSpeed = false and 0 or 8
+game.Lighting.GlobalShadows = not false
+end
+end)
 Lighting:Toggle("Removal-Light",false,function(v)
 if v then
 for _,v in pairs(workspace.CurrentRooms:GetDescendants()) do
@@ -898,7 +951,6 @@ _G.AlertVolume = v
 end)
 local ESP = Tab.Visual:CraftPage(1)
 ESP:Seperator("ESP")
-
 ESP:Toggle("Doors",false,function(v)
 _G.ESPDoor = v
 if v then
@@ -924,9 +976,7 @@ end
 end
 repeat task.wait() until not _G.ESPDoor
 DoorINF:Disconnect()
-for i,v in pairs({}) do
-v:Destroy()
-end 
+LibraryESP:Delete("DoorESP")
 end
 end)
 
