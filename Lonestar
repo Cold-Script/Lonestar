@@ -322,7 +322,7 @@ Players:Seperator("Added")
 Players:Toggle("Eat Candy",false,function(v)
 _G.EatCandy = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if _G.EatCandy then
+if game.Players.LocalPlayer.Character:FindFirstChild("Candy",true) and _G.EatCandy then
 game.Players.LocalPlayer.Character.Candy.Remote:FireServer()
 end
 end)
@@ -528,22 +528,20 @@ end)
 Anti:Toggle("Anti-Seek Arms",false,function(v)
 _G.AntiSeekArms = v
 end)
-game:GetService("Workspace").DescendantAdded:Connect(function(child)
-if not _G.AntiEyes then return end
+game:GetService("RunService").RenderStepped:Connect(function()
 if _G.AntiEyes then 
 if workspace:FindFirstChild("Eyes") then 
-game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(_G.AntiEyes and -650 or 0)
+game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(0,_G.AntiEyes and -650 or 0,0,false)
 end 
 end 
 end)
 Anti:Toggle("Anti-Eyes",false,function(v)
 _G.AntiEyes = v
 end)
-game:GetService("Workspace").DescendantAdded:Connect(function(child)
-if not _G.AntiLookman then return end
+game:GetService("RunService").RenderStepped:Connect(function()
 if _G.AntiLookman then 
 if workspace:FindFirstChild("BackdoorLookman") then 
-game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(_G.AntiLookman and -650 or 0)
+game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(0,_G.AntiLookman and -650 or 0,0,false)
 end 
 end 
 end)
