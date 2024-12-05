@@ -175,39 +175,15 @@ Rooms:Toggle("Closets Exit Fix",false,function(v)
 _G.ClosetsExitFix = v
 end)
 Rooms:Seperator("World")
-game:GetService('ProximityPromptService').PromptTriggered:Connect(function(prompt)
-if _G.EnabledClosetsTransparency then
-if prompt.Parent.Name == 'Bed' or prompt.Parent.Name == 'Wardrobe' or prompt.Parent.Name == 'Large_Locker' or prompt.Parent.Name == 'Backdoor_Wardrobe' or prompt.Parent.Name == 'RetroWardrobe' or prompt.Parent.Name == 'Rooms_Locker' or prompt.Parent.Name == 'Toolshed' then
-local ogTransparency = {}
-for i, v in pairs(prompt.Parent:GetDescendants()) do
-pcall(function()
-ogTransparency[v.Name] = v.Transparency
-v.Transparency = _G.ClosetsTransparency or 0.5
-end)
-end
-task.wait(1)
-task.spawn(function()
-repeat
-if not UserInputService:GetFocusedTextBox() and UserInputService:IsKeyDown(exitKeys[1]) or UserInputService:IsKeyDown(exitKeys[2]) or UserInputService:IsKeyDown(exitKeys[3]) or UserInputService:IsKeyDown(exitKeys[4]) then
-for i, v in pairs(prompt.Parent:GetDescendants()) do
-pcall(function()
-v.Transparency = ogTransparency[v.Name]
-end)
-end
-game:GetService("ReplicatedStorage").RemotesFolder.CamLock:FireServer()
-break
-end
-task.wait(1)
-until false
-end)
+Rooms:Toggle("No LiveSanity",false,function(v)
+_G.NoLiveSanity = v
+while _G.NoLiveSanity do wait(1)
+for _,v in workspace.CurrentCamera:GetChildren() do
+if v.Name == "LiveSanity" and workspace:FindFirstChild("EntityModel") then
+v.Enabled = not _G.NoLiveSanity
 end
 end
-end)
-Rooms:Dropdown("Closets Transparency",{"0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1"},"0.5",function(v)
-_G.ClosetsTransparency = v
-end)
-Rooms:Toggle("Closets Transparency",false,function(v)
-_G.EnabledClosetsTransparency = v
+end
 end)
 Rooms:Toggle("No Void Roblox",false,function(v)
 if v then
@@ -215,6 +191,9 @@ workspace.FallenPartsDestroyHeight = 0 / 0
 else
 workspace.FallenPartsDestroyHeight = -50000
 end
+end)
+Rooms:Toggle("No Seek Tease",false,function(v)
+game.ReplicatedStorage.ClientModules.EntityModules.Seek.tease = v and (function() end) or SeekFunction
 end)
 Rooms:Toggle("No Skybox",false,function(v)
 if v then
@@ -322,7 +301,7 @@ Players:Seperator("Added")
 Players:Toggle("Eat Candy",false,function(v)
 _G.EatCandy = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if game.Players.LocalPlayer.Character:FindFirstChild("Candy",true) and _G.EatCandy then
+if not game.Players.LocalPlayer.Character.Candy:FindFirstChild("Meshes/DOORS_EvilCandy_Cube", true) and game.Players.LocalPlayer.Character:FindFirstChild("Candy",true) and _G.EatCandy then
 game.Players.LocalPlayer.Character.Candy.Remote:FireServer()
 end
 end)
@@ -529,21 +508,26 @@ Anti:Toggle("Anti-Seek Arms",false,function(v)
 _G.AntiSeekArms = v
 end)
 game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AntiEyes then 
-if workspace:FindFirstChild("Eyes") then 
-game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(0,_G.AntiEyes and -650 or 0,0,false)
-end 
-end 
+if not (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("Collision")) then return end
+if workspace:FindFirstChild("Eyes") and _G.AntiEyes then
+for _, v in workspace:GetChildren() do
+if v.Name == "Eyes" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
+game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(-650)
+break
+end
+end
+end
+if workspace:FindFirstChild("BackdoorLookman") and _G.AntiLookman then
+for _, v in workspace:GetChildren() do
+if v.Name == "BackdoorLookman" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
+game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(-650)
+break
+end
+end
+end
 end)
 Anti:Toggle("Anti-Eyes",false,function(v)
 _G.AntiEyes = v
-end)
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AntiLookman then 
-if workspace:FindFirstChild("BackdoorLookman") then 
-game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(0,_G.AntiLookman and -650 or 0,0,false)
-end 
-end 
 end)
 Anti:Toggle("Anti-Lookman",false,function(v)
 _G.AntiLookman = v
