@@ -301,10 +301,8 @@ Players:Seperator("Added")
 Players:Toggle("Eat Candy",false,function(v)
 _G.EatCandy = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if not game.Players.LocalPlayer.Character.Candy:FindFirstChild("Meshes/DOORS_EvilCandy_Cube", true) then
 if game.Players.LocalPlayer.Character:FindFirstChild("Candy",true) and _G.EatCandy then
 game.Players.LocalPlayer.Character.Candy.Remote:FireServer()
-end
 end
 end)
 end)
