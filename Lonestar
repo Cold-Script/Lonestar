@@ -369,9 +369,8 @@ end
 until speedBoostFinished
 SpeedBypass:SetValue(originalSpeed)
 else
-task.spawn(function()
-while wait(1) do
-if not collisionClone then
+task.spawn(function()  
+while not collisionClone then
 collisionClone = game.Players.LocalPlayer.Character.Collision:Clone() do
 collisionClone.CanCollide = false
 collisionClone.Massless = true
@@ -380,7 +379,6 @@ if collisionClone:FindFirstChild("CollisionCrouch") then
 collisionClone.CollisionCrouch:Destroy()
 end   
 collisionClone.Parent = game.Players.LocalPlayer.Character    
-end
 end
 end
 end)
@@ -432,8 +430,8 @@ Bypass:Toggle("No Jammin",false,function(v)
 _G.NoJammin = v
 game:GetService("RunService").RenderStepped:Connect(function()
 local Jammin = not game.ReplicatedStorage.LiveModifiers:FindFirstChild("Jammin")
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Jam.Playing = not _G.NoJammin or Jammin
-game.SoundService.Main.Jamming.Enabled = not _G.NoJammin or Jammin
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Jam.Playing = _G.NoJammin and false or Jammin
+game.SoundService.Main.Jamming.Enabled = _G.NoJammin and false or Jammin
 end)
 end)
 Bypass:Seperator("Camera")
