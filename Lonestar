@@ -1088,3 +1088,11 @@ end
 end
 end
 end)
+local ESPSetting = Tab.Visual:CraftPage(2)
+ESPSetting:Seperator("ESP Setting")
+ESPSetting:Toggle("Rainbow ESP",false,function(v)
+getgenv().RainbowESP = v
+end)
+ESPSetting:Toggle("Distance ESP",false,function(v)
+getgenv().DistanceESP = v
+end)
