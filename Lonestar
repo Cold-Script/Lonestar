@@ -200,6 +200,14 @@ workspace.Camera.SkyboxPart.Transparency = 0
 end
 end)
 Rooms:Seperator("50")
+Rooms:Toggle("Auto Padlock Unlock",false,function(v)
+_G.AutoLibrary = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if workspace:FindFirstChild("LibraryHintPaper",true) or workspace:FindFirstChild("LibraryHintPaperHard",true) and _G.AutoLibrary then
+game:GetService("ReplicatedStorage").RemotesFolder.PL:FireServer()
+end
+end)
+end)
 Rooms:Button("Prize Library",function()
 local Floor = game:GetService("ReplicatedStorage").GameData.Floor
 local Paper = workspace:FindFirstChild("LibraryHintPaper",true) or workspace:FindFirstChild("LibraryHintPaperHard",true) or Players:FindFirstChild("LibraryHintPaper",true) or Players:FindFirstChild("LibraryHintPaperHard",true)
@@ -299,7 +307,9 @@ Players:Toggle("Eat Candy",false,function(v)
 _G.EatCandy = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if game.Players.LocalPlayer.Character:FindFirstChild("Candy",true) and _G.EatCandy then
+if not game.Players.LocalPlayer.Character:FindFirstChild("Meshes/DOORS_EvilCandy_Cube", true) then
 game.Players.LocalPlayer.Character.Candy.Remote:FireServer()
+end
 end
 end)
 end)
@@ -360,7 +370,8 @@ until speedBoostFinished
 SpeedBypass:SetValue(originalSpeed)
 else
 task.spawn(function()
-while not collisionClone and wait(1) do
+while wait(1) do
+if not collisionClone then
 collisionClone = game.Players.LocalPlayer.Character.Collision:Clone() do
 collisionClone.CanCollide = false
 collisionClone.Massless = true
@@ -369,6 +380,7 @@ if collisionClone:FindFirstChild("CollisionCrouch") then
 collisionClone.CollisionCrouch:Destroy()
 end   
 collisionClone.Parent = game.Players.LocalPlayer.Character    
+end
 end
 end
 end)
@@ -472,7 +484,7 @@ for _, v in (workspace:GetDescendants()) do
 if v.Name == "DoorFake" and v:IsA("Model") then
 v.Hidden.CanTouch = not _G.AntiDupe
 if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
-v.LockPart.UnlockPrompt.Enabled = not _G.AntiDupe
+v.LockPart.UnlockPrompt.Enabled = not true
 end
 end
 end
@@ -560,10 +572,18 @@ Anti:Toggle("Anti-Gloom Eggs",false,function(v)
 _G.AntiGloomEggs = v
 end)
 Anti:Toggle("Anti-Screech",false,function(v)
-if v then
+_G.AntiScreech = v
+while wait(0.1) do
+if _G.AntiScreech then
+for _, room in pairs(workspace.Camera:GetDescendants()) do
+if room.Name == "Screech" then
+room:Destroy()
+end
+end
 game:GetService("ReplicatedStorage").RemotesFolder.Screech.Name = "_Screech"
 else
 game:GetService("ReplicatedStorage").RemotesFolder._Screech.Name = "Screech"
+end
 end
 end)
 Anti:Toggle("Anti-A90",false,function(v)
@@ -833,7 +853,7 @@ Lighting:Seperator("Notifiaction")
 _G.AlertVolume = 5
 Lighting:Toggle("Notification Entity",false,function(v)
 if v then
-local Entity = {"SeekNewCloneMoving","SeekMoving","BackdoorLookman","BackdoorRush","GloomPile","Eyes","JeffTheKiller","RushMoving","AmbushMoving","Snare","A60","A120"}
+local Entity = {"SeekNewCloneMoving","SeekMoving","BackdoorLookman","BackdoorRush","GloombatSwarm","Eyes","JeffTheKiller","RushMoving","AmbushMoving","Snare","A60","A120"}
 addconnect = workspace.ChildAdded:Connect(function(v)
 if table.find(Entity,v.Name) then
 repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 1000 or not v:IsDescendantOf(workspace)
@@ -898,8 +918,8 @@ Sound.Volume = _G.AlertVolume
 Sound.PlayOnRemove = true
 Sound:Destroy()
 end
-elseif v.Name == "GloomPile" then
-Library:Notify("Entity 'GloomPile' has spawn,\noff light to survival!")
+elseif v.Name == "GloombatSwarm" then
+Library:Notify("Entity 'Gloombat Swarm' has spawn,\noff light to survival!")
 if _G.SoundAlert then
 local Sound = Instance.new("Sound")
 Sound.Parent = game.SoundService
