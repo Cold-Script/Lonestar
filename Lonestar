@@ -1179,8 +1179,9 @@ elseif v.Name == "Snare" then
 LibraryESP:AddESP(v,"Snare",Color3.fromRGB(255, 0, 0),25,"SnareESP")
 end		
 end					                
-EntityESP = workspace.ChildAdded:Connect(function(v)                       
-for _,v in pairs(workspace:GetDescendants()) do
+EntityESP = workspace.ChildAdded:Connect(function(v)    
+repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 750 or not v:IsDescendantOf(workspace)
+if v:IsDescendantOf(workspace) then
 if v.Name == "RushMoving" then
 LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),25,"RushESP")
 v.RushNew.Transparency = 0
