@@ -1175,6 +1175,7 @@ LibraryESP:Delete("GrumbleESP")
 LibraryESP:Delete("A60ESP")
 LibraryESP:Delete("A120ESP")
 LibraryESP:Delete("DreadESP")
+end
 end)
 local ESPSetting = Tab.Visual:CraftPage(2)
 ESPSetting:Seperator("ESP Setting")
