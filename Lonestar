@@ -1123,7 +1123,7 @@ LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),25,"DreadESP")
 v.Main.Transparency = 0
 end		
 end					                
-EntityESP = workspace.ChildAdded:Connect(function(child)                       
+EntityESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
 LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),25,"RushESP")
