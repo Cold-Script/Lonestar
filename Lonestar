@@ -359,7 +359,8 @@ end
 until speedBoostFinished
 SpeedBypass:SetValue(originalSpeed)
 else
-if not collisionClone then
+task.spawn(function()
+while not collisionClone and wait(1) do
 collisionClone = game.Players.LocalPlayer.Character.Collision:Clone() do
 collisionClone.CanCollide = false
 collisionClone.Massless = true
@@ -370,6 +371,7 @@ end
 collisionClone.Parent = game.Players.LocalPlayer.Character    
 end
 end
+end)
 task.spawn(function()  
 while not speedBoostFinished do
 collisionClone.Massless = not collisionClone.Massless
@@ -1084,41 +1086,41 @@ end
 end)
 ESP:Toggle("Items",false,function(v)
 _G.ItemESP = v
- if v then
- local function check(v)
- if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
- local part = (v:FindFirstChild("Handle") or v:FindFirstChild("Prop"))
- local Items = LibraryESP:AddESP(v,v.Name,Color3.fromRGB(160,190,255),25,"ItemESP")
- table.insert({},Items)
- end
- end     
-  local function setup(room)
-  local assets = room:WaitForChild("Assets")     
-  if assets then  
-  ItemESP = assets.DescendantAdded:Connect(function(v)
-  check(v) 
-  end)            
-  for i,v in pairs(assets:GetDescendants()) do
-  check(v)
-   end    
-   task.spawn(function()
-   repeat task.wait() until not _G.ItemESP
-   subaddcon:Disconnect()  
-   end) 
-   end 
-   end
-   ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-   setup(room)
-   end)     
-   for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-   if room:FindFirstChild("Assets") then
-   setup(room) 
-   end
-   end
-   repeat task.wait() until not _G.ItemESP
-   ItemESP:Disconnect()     
-   LibraryESP:Delete("ItemESP")
-   end
+if v then
+local function check(v)
+if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
+local part = (v:FindFirstChild("Handle") or v:FindFirstChild("Prop"))
+local Items = LibraryESP:AddESP(v,v.Name,Color3.fromRGB(160,190,255),25,"ItemESP")
+table.insert({},Items)
+end
+end    
+local function setup(room)
+local assets = room:WaitForChild("Assets")     
+if assets then  
+ItemESP = assets.DescendantAdded:Connect(function(v)
+check(v) 
+end)            
+for i,v in pairs(assets:GetDescendants()) do
+check(v)
+end    
+task.spawn(function()
+repeat task.wait() until not _G.ItemESP
+subaddcon:Disconnect()  
+end) 
+end 
+end
+ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+setup(room)
+end)     
+for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+if room:FindFirstChild("Assets") then
+setup(room) 
+end
+end
+repeat task.wait() until not _G.ItemESP
+ItemESP:Disconnect()     
+LibraryESP:Delete("ItemESP")
+end
 end)
 ESP:Toggle("Entitys",false,function(v)
 if v then               
@@ -1221,36 +1223,37 @@ ESP:Toggle("Gold",false,function(v)
 _G.GoldESP = v
 if v then
 local function check(v)
-if v:IsA(“Model”) and v.Name == “GoldPile” then
+if v:IsA("Model") and v.Name == "GoldPile" then
 task.wait(0.1)
-local GoldESP = LibraryESP:AddESP(v,”Gold (“.. tostring(v:GetAttribute(“GoldValue”))..”$)”,Color3.fromRGB(255,255,0),25,”GoldESP”)
-table.insert({},GoldESP)
+local Hitbox = v:WaitForChild("Hitbox")
+local DoorESP = LibraryESP:AddESP(v,"Gold (".. tostring(v:GetAttribute("GoldValue")).."$)",Color3.fromRGB(255,255,0),25,"GoldESP")
+table.insert({},DoorESP)
 end
 end
 local function setup(room)
-local assets = room:WaitForChild(“Assets”)
+local assets = room:WaitForChild("Assets")
 GoldESP = assets.DescendantAdded:Connect(function(v)
-check(v)
+check(v) 
 end)
 for i,v in pairs(assets:GetDescendants()) do
 check(v)
-end
+end         
 task.spawn(function()
-Repeat task.wait() until not _G.GoldESP
-GoldESP:Disconnect()
-end)
-end
+repeat task.wait() until not _G.GoldESP
+GoldESP:Disconnect()  
+end)  
+end       
 GoldESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
 setup(room)
 end)
 for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-if room:FindFirstChild(“Assets”) then
-setup(room)
+if room:FindFirstChild("Assets") then
+setup(room) 
 end
-end
-Repeat task.wait() until not _G.GoldESP
+end       
+repeat task.wait() until not _G.GoldESP
 GoldESP:Disconnect()
-LibraryESP:Delete(“GoldESP”)
+LibraryESP:Delete("GoldESP")
 end
 end)
 local ESPSetting = Tab.Visual:CraftPage(2)
