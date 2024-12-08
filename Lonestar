@@ -1019,3 +1019,72 @@ end
 end
 end
 end)
+ESP:Toggle("Lever Gate",false,function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LeverForGate" then
+LibraryESP:AddESP(v,"Lever Gate",Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
+end		
+end					                
+LeverGateESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LeverForGate" then
+LibraryESP:AddESP(v,"Lever Gate",Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
+end		
+end	
+end)
+else
+LeverGateESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "LeverGateESP" then
+v:Destroy()
+end
+end
+end
+end)
+ESP:Toggle("Books",false,function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+LibraryESP:AddESP(v,"Books",Color3.fromRGB(255, 100, 255),25,"BookESP")
+end		
+end					                
+BookESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+LibraryESP:AddESP(v,"Books",Color3.fromRGB(255, 100, 255),25,"BookESP")
+end		
+end			
+end)
+else
+BookESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "BookESP" then
+v:Destroy()
+end
+end
+end
+end)
+ESP:Toggle("Breaker",false,function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveBreakerPolePickup" then
+LibraryESP:AddESP(v,"Breaker",Color3.fromRGB(100, 100, 100),25,"BreakerESP")
+end		
+end					                
+BreakerESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveBreakerPolePickup" then
+LibraryESP:AddESP(v,"Breaker",Color3.fromRGB(100, 100, 100),25,"BreakerESP")
+end		
+end					
+end)
+else
+BreakerESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "BreakerESP" then
+v:Destroy()
+end
+end
+end
+end)
