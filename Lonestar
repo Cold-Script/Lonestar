@@ -422,7 +422,7 @@ Bypass:Toggle("No Jammin",false,function(v)
 _G.NoJammin = v
 game:GetService("RunService").RenderStepped:Connect(function()
 local Jammin = not game.ReplicatedStorage.LiveModifiers:FindFirstChild("Jammin")
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Jam.Playing = not _G.NoJammin or Jamman
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Jam.Playing = not _G.NoJammin or Jammin
 game.SoundService.Main.Jamming.Enabled = not _G.NoJammin or Jammin
 end)
 end)
@@ -579,10 +579,10 @@ end
 end)
 Anti:Toggle("Anti-Dread",false,function(v)
 if v then
-game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Dread.Parent = workspace
+game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Parent = nil
 game:GetService("ReplicatedStorage").RemotesFolder.Dread.Name = "_Dread"
 else
-workspace.Jumpscare_Dread.Parent = game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare
+game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Parent = game.Players.LocalPlayers.PlayerGui.MainUI.Jumpscare
 game:GetService("ReplicatedStorage").RemotesFolder._Dread.Name = "Dread"
 end
 end)
