@@ -1223,7 +1223,7 @@ end
 end)
 ESP:Toggle("Gold",false,function(v)
 _G.GoldESP = v
-If v then
+if v then
 local function check(v)
 if v:IsA(“Model”) and v.Name == “GoldPile” then
 task.wait(0.1)
