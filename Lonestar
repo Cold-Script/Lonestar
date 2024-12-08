@@ -192,9 +192,6 @@ else
 workspace.FallenPartsDestroyHeight = -50000
 end
 end)
-Rooms:Toggle("No Seek Tease",false,function(v)
-game.ReplicatedStorage.ClientModules.EntityModules.Seek.tease = v and (function() end) or SeekFunction
-end)
 Rooms:Toggle("No Skybox",false,function(v)
 if v then
 workspace.Camera.SkyboxPart.Transparency = 1
@@ -284,7 +281,7 @@ end)
 
 local Players = Tab.Players:CraftPage(1)
 Players:Seperator("Players")
-Players:Dropdown("Walkspeed",{"20","25","30","35"},"",function(v)
+Players:Dropdown("Walkspeed",{"20","25","30","35","40","45","50"},"",function(v)
 _G.Speed = v
 end)
 Players:Toggle("Speed",false,function(v)
@@ -756,7 +753,6 @@ workspace.Terrain.WaterReflectance = true and 0 or 1
 workspace.Terrain.WaterTransparency = true and 0 or 1
 workspace.Terrain.WaterWaveSize = true and 0 or 0.05
 workspace.Terrain.WaterWaveSpeed = true and 0 or 8
-game.Lighting.GlobalShadows = not true
 LowQuality = workspace.CurrentRooms.ChildAdded:Connect(function(child)
 for _, object in pairs(workspace:GetDescendants()) do
 if object:IsA("BasePart") then
@@ -772,7 +768,6 @@ workspace.Terrain.WaterReflectance = true and 0 or 1
 workspace.Terrain.WaterTransparency = true and 0 or 1
 workspace.Terrain.WaterWaveSize = true and 0 or 0.05
 workspace.Terrain.WaterWaveSpeed = true and 0 or 8
-game.Lighting.GlobalShadows = not true
 end)
 else
 LowQuality:Disconnect()
@@ -790,7 +785,6 @@ workspace.Terrain.WaterReflectance = false and 0 or 1
 workspace.Terrain.WaterTransparency = false and 0 or 1
 workspace.Terrain.WaterWaveSize = false and 0 or 0.05
 workspace.Terrain.WaterWaveSpeed = false and 0 or 8
-game.Lighting.GlobalShadows = not false
 end
 end)
 Lighting:Toggle("Removal-Light",false,function(v)
@@ -1121,9 +1115,13 @@ v.Main.Transparency = 0
 elseif v.Name == "Dread" then
 LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),25,"DreadESP")
 v.Main.Transparency = 0
+elseif v.Name == "Screech" then
+LibraryESP:AddESP(v,"Screech",Color3.fromRGB(255, 0, 0),25,"ScreechESP")
+elseif v.Name == "Snare" then
+LibraryESP:AddESP(v,"Snare",Color3.fromRGB(255, 0, 0),25,"SnareESP")
 end		
 end					                
-EntityESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+EntityESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
 LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),25,"RushESP")
@@ -1133,19 +1131,13 @@ LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),25,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "Eyes" then
 LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),25,"EyesESP")
+v.Core.Transparency = 0
 elseif v.Name == "BackdoorRush" then
 LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),25,"BlitzESP")
 v.Main.Transparency = 0
 elseif v.Name == "BackdoorLookman" then
 LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),25,"LookmanESP")
-elseif v.Name == "FigureRig" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
-elseif v.Name == "FigureRagdoll" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
-elseif v.Name == "GiggleCeiling" then
-LibraryESP:AddESP(v.Handle,"Giggle",Color3.fromRGB(255, 255, 255),25,"GiggleESP")
-elseif v.Name == "Grumbo" then
-LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),25,"GrumbleESP")
+v.Core.Transparency = 0
 elseif v.Name == "A60" then
 LibraryESP:AddESP(v,"A60",Color3.fromRGB(255, 0, 0),25,"A60ESP")
 v.Main.Transparency = 0
@@ -1157,6 +1149,28 @@ LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),25,"DreadESP")
 v.Main.Transparency = 0
 end		
 end						
+end)
+EntityESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "FigureRig" then
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
+elseif v.Name == "FigureRagdoll" then
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
+elseif v.Name == "GiggleCeiling" then
+LibraryESP:AddESP(v.Handle,"Giggle",Color3.fromRGB(255, 255, 255),25,"GiggleESP")
+elseif v.Name == "Grumbo" then
+LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),25,"GrumbleESP")
+elseif v.Name == "Snare" then
+LibraryESP:AddESP(v,"Snare",Color3.fromRGB(255, 0, 0),25,"SnareESP")
+end
+end
+end)
+EntityESP = workspace.CurrentCamera.ChildAdded:Connect(function(child)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Screech" then
+LibraryESP:AddESP(v,"Screech",Color3.fromRGB(255, 0, 0),25,"ScreechESP")
+end
+end
 end)
 else
 EntityESP:Disconnect()
@@ -1171,6 +1185,8 @@ LibraryESP:Delete("GrumbleESP")
 LibraryESP:Delete("A60ESP")
 LibraryESP:Delete("A120ESP")
 LibraryESP:Delete("DreadESP")
+LibraryESP:Delete("ScreechESP")
+LibraryESP:Delete("SnareESP")
 end
 end)
 local ESPSetting = Tab.Visual:CraftPage(2)
