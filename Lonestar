@@ -1088,7 +1088,7 @@ _G.ItemESP = v
  local function check(v)
  if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
  local part = (v:FindFirstChild("Handle") or v:FindFirstChild("Prop"))
- local Items = LibraryESP:AddESP(v,v.Name,Color3.fromRGB(160,190,255),20,"ItemESP")
+ local Items = LibraryESP:AddESP(v,v.Name,Color3.fromRGB(160,190,255),25,"ItemESP")
  table.insert({},Items)
  end
  end     
