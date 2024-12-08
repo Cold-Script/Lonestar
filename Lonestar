@@ -1099,13 +1099,11 @@ LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),25,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "Eyes" then
 LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),25,"EyesESP")
-v.Core.Transparency = 0
 elseif v.Name == "BackdoorRush" then
 LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),25,"BlitzESP")
 v.Main.Transparency = 0
 elseif v.Name == "BackdoorLookman" then
 LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),25,"LookmanESP")
-v.Core.Transparency = 0
 elseif v.Name == "FigureRig" then
 LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
 elseif v.Name == "FigureRagdoll" then
@@ -1135,13 +1133,11 @@ LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),25,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "Eyes" then
 LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),25,"EyesESP")
-v.Core.Transparency = 0
 elseif v.Name == "BackdoorRush" then
 LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),25,"BlitzESP")
 v.Main.Transparency = 0
 elseif v.Name == "BackdoorLookman" then
 LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),25,"LookmanESP")
-v.Core.Transparency = 0
 elseif v.Name == "FigureRig" then
 LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
 elseif v.Name == "FigureRagdoll" then
