@@ -1153,13 +1153,11 @@ v.Main.Transparency = 0
 elseif v.Name == "Dread" then
 LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),25,"DreadESP")
 v.Main.Transparency = 0
-elseif v.Name == "Screech" then
-LibraryESP:AddESP(v,"Screech",Color3.fromRGB(255, 0, 0),25,"ScreechESP")
 elseif v.Name == "Snare" then
 LibraryESP:AddESP(v,"Snare",Color3.fromRGB(255, 0, 0),25,"SnareESP")
 end		
 end					                
-EntityESP = workspace.ChildAdded:Connect(function(child)                       
+EntityESP = workspace.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
 LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),25,"RushESP")
@@ -1188,7 +1186,7 @@ v.Main.Transparency = 0
 end		
 end						
 end)
-EntityESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+EntityESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "FigureRig" then
 LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
@@ -1200,13 +1198,6 @@ elseif v.Name == "Grumbo" then
 LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),25,"GrumbleESP")
 elseif v.Name == "Snare" then
 LibraryESP:AddESP(v,"Snare",Color3.fromRGB(255, 0, 0),25,"SnareESP")
-end
-end
-end)
-EntityESP = workspace.CurrentCamera.ChildAdded:Connect(function(child)
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Screech" then
-LibraryESP:AddESP(v,"Screech",Color3.fromRGB(255, 0, 0),25,"ScreechESP")
 end
 end
 end)
@@ -1223,7 +1214,6 @@ LibraryESP:Delete("GrumbleESP")
 LibraryESP:Delete("A60ESP")
 LibraryESP:Delete("A120ESP")
 LibraryESP:Delete("DreadESP")
-LibraryESP:Delete("ScreechESP")
 LibraryESP:Delete("SnareESP")
 end
 end)
