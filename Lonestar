@@ -1217,6 +1217,42 @@ LibraryESP:Delete("DreadESP")
 LibraryESP:Delete("SnareESP")
 end
 end)
+ESP:Toggle("Gold",false,function(v)
+_G.GoldESP = v
+If v then
+local function check(v)
+if v:IsA(“Model”) and v.Name == “GoldPile” then
+task.wait(0.1)
+local GoldESP = LibraryESP:AddESP(v,”Gold (“.. tostring(v:GetAttribute(“GoldValue”))..”$)”,Color3.fromRGB(255,255,0),25,”GoldESP”)
+table.insert({},GoldESP)
+end
+end
+local function setup(room)
+local assets = room:WaitForChild(“Assets”)
+GoldESP = assets.DescendantAdded:Connect(function(v)
+check(v)
+end)
+for i,v in pairs(assets:GetDescendants()) do
+check(v)
+end
+task.spawn(function()
+Repeat task.wait() until not _G.GoldESP
+GoldESP:Disconnect()
+end)
+end
+GoldESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+setup(room)
+end)
+for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+if room:FindFirstChild(“Assets”) then
+setup(room)
+end
+end
+Repeat task.wait() until not _G.GoldESP
+GoldESP:Disconnect()
+LibraryESP:Delete(“GoldESP”)
+end
+end)
 local ESPSetting = Tab.Visual:CraftPage(2)
 ESPSetting:Seperator("ESP Setting")
 ESPSetting:Toggle("Rainbow ESP",false,function(v)
