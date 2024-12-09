@@ -1167,7 +1167,7 @@ if v.Name == "MinesAnchor" then
 LibraryESP:AddESP(v,"Anchor",Color3.fromRGB(255, 0, 255),25,"AnchorESP")
 end		
 end					                
-AnchorESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+AnchorESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesAnchor" then
 LibraryESP:AddESP(v,"Anchor",Color3.fromRGB(255, 0, 255),25,"AnchorESP")
