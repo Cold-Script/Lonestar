@@ -370,7 +370,7 @@ until speedBoostFinished
 SpeedBypass:SetValue(originalSpeed)
 else
 task.spawn(function()  
-while not collisionClone then
+while not collisionClone do
 collisionClone = game.Players.LocalPlayer.Character.Collision:Clone() do
 collisionClone.CanCollide = false
 collisionClone.Massless = true
