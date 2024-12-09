@@ -399,6 +399,8 @@ end
 end)
 Bypass:Toggle("Climb Ladder Bypass",false,function(v)
 _G.LadderBypass = v
+task.spawn(function()
+while _G.LadderBypass do wait(1)
 if v and not workspace:FindFirstChild("progressPart") then
 local progressPart = Instance.new("Part", workspace) do
 progressPart.Anchored = true
@@ -415,6 +417,8 @@ if workspace:FindFirstChild("Ladder_Bypass") then
 workspace:FindFirstChild("Ladder_Bypass"):Destroy() 
 end
 end
+end
+end)
 end)
 Bypass:Toggle("Crouch Spoof",false,function(v)
 _G.CrouchSpoof = v
@@ -454,8 +458,8 @@ game:GetService("RunService").RenderStepped:Connect(function()
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).spring.Speed = _G.NoBobCam and 9e9 or 5
 end)
 end)
-Bypass:Button("No Camera Shake",function()
-game:GetService("ReplicatedStorage").RemotesFolder.CamShake:Destroy()
+Bypass:Toggle("No Camera Shake",false,function(v)
+game:GetService("ReplicatedStorage").RemotesFolder.CamShake:FireServer(not v)
 end)
 
 
@@ -1179,7 +1183,7 @@ end
 end
 end
 end)
-ESP:Toggle("Anchor",false,function(v)
+ESP:Toggle("Water Pump",false,function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "WaterPump" then
@@ -1301,8 +1305,6 @@ v.Main.Transparency = 0
 elseif v.Name == "Dread" then
 LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),25,"DreadESP")
 v.Main.Transparency = 0
-elseif v.Name == "Snare" then
-LibraryESP:AddESP(v,"Snare",Color3.fromRGB(255, 0, 0),25,"SnareESP")
 end		
 end					                
 EntityESP = workspace.ChildAdded:Connect(function(v)    
@@ -1345,8 +1347,6 @@ elseif v.Name == "GiggleCeiling" then
 LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),25,"GiggleESP")
 elseif v.Name == "Grumbo" then
 LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),25,"GrumbleESP")
-elseif v.Name == "Snare" then
-LibraryESP:AddESP(v,"Snare",Color3.fromRGB(255, 0, 0),25,"SnareESP")
 end
 end
 end)
@@ -1363,7 +1363,6 @@ LibraryESP:Delete("GrumbleESP")
 LibraryESP:Delete("A60ESP")
 LibraryESP:Delete("A120ESP")
 LibraryESP:Delete("DreadESP")
-LibraryESP:Delete("SnareESP")
 end
 end)
 ESP:Toggle("Gold",false,function(v)
