@@ -370,7 +370,7 @@ until speedBoostFinished
 SpeedBypass:SetValue(originalSpeed)
 else
 task.spawn(function()  
-while not collisionClone do
+while not collisionClone do wait(1)
 collisionClone = game.Players.LocalPlayer.Character.Collision:Clone() do
 collisionClone.CanCollide = false
 collisionClone.Massless = true
@@ -571,13 +571,9 @@ _G.AntiGloomEggs = v
 end)
 Anti:Toggle("Anti-Screech",false,function(v)
 _G.AntiScreech = v
-while wait(0.1) do
+while _G.AntiScreech do wait(1)
 if _G.AntiScreech then
-for _, room in pairs(workspace.Camera:GetDescendants()) do
-if room.Name == "Screech" then
-room:Destroy()
-end
-end
+LibraryESP:Delete("Screech")
 game:GetService("ReplicatedStorage").RemotesFolder.Screech.Name = "_Screech"
 else
 game:GetService("ReplicatedStorage").RemotesFolder._Screech.Name = "Screech"
@@ -1079,6 +1075,29 @@ end
 end
 end
 end)
+ESP:Toggle("Fuse",false,function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "FuseObtain" then
+LibraryESP:AddESP(v,"Fuse",Color3.fromRGB(0, 255, 0),25,"FuseESP")
+end		
+end					                
+FuseESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "FuseObtain" then
+LibraryESP:AddESP(v,"Fuse",Color3.fromRGB(0, 255, 0),25,"FuseESP")
+end		
+end			
+end)
+else
+FuseESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "FuseESP" then
+v:Destroy()
+end
+end
+end
+end)
 ESP:Toggle("Breaker",false,function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
@@ -1097,6 +1116,33 @@ else
 BreakerESP:Disconnect()
 for _, v in pairs(workspace:GetDescendants()) do
 if v.Name == "BreakerESP" then
+v:Destroy()
+end
+end
+end
+end)
+ESP:Toggle("Rooms Lockers",false,function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Rooms_Locker" then
+LibraryESP:AddESP(v,"Locker",Color3.fromRGB(100, 100, 100),25,"LockerESP")
+elseif v.Name == "Rooms_Locker_Fridge" then
+LibraryESP:AddESP(v,"Locker Fridge",Color3.fromRGB(100, 100, 100),25,"LockerESP")
+end		
+end					                
+LockerESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Rooms_Locker" then
+LibraryESP:AddESP(v,"Locker",Color3.fromRGB(100, 100, 100),25,"LockerESP")
+elseif v.Name == "Rooms_Locker_Fridge" then
+LibraryESP:AddESP(v,"Locker Fridge",Color3.fromRGB(100, 100, 100),25,"LockerESP")
+end		
+end			
+end)
+else
+LockerESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "LockerESP" then
 v:Destroy()
 end
 end
