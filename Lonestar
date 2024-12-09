@@ -1121,6 +1121,29 @@ end
 end
 end
 end)
+ESP:Toggle("Generator",false,function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesGenerator" then
+LibraryESP:AddESP(v,"Generator",Color3.fromRGB(0, 255, 200),25,"GeneratorESP")
+end		
+end					                
+GeneratorESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesGenerator" then
+LibraryESP:AddESP(v,"Generator",Color3.fromRGB(0, 255, 200),25,"GeneratorESP")
+end		
+end	
+end)
+else
+GeneratorESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "GeneratorESP" then
+v:Destroy()
+end
+end
+end
+end)
 ESP:Toggle("Rooms Lockers",false,function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
