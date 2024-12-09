@@ -370,7 +370,7 @@ until speedBoostFinished
 SpeedBypass:SetValue(originalSpeed)
 else
 task.spawn(function()  
-while not collisionClone and wait(1) do
+while not collisionClone do
 collisionClone = game.Players.LocalPlayer.Character.Collision:Clone() do
 collisionClone.CanCollide = false
 collisionClone.Massless = true
@@ -399,7 +399,7 @@ end
 end)
 Bypass:Toggle("Climb Ladder Bypass",false,function(v)
 _G.LadderBypass = v
-if v then
+if v and not workspace:FindFirstChild("progressPart") then
 local progressPart = Instance.new("Part", workspace) do
 progressPart.Anchored = true
 progressPart.CanCollide = false
