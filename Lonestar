@@ -370,7 +370,7 @@ until speedBoostFinished
 SpeedBypass:SetValue(originalSpeed)
 else
 task.spawn(function()  
-while not collisionClone do wait(1)
+while not collisionClone and wait(1) do
 collisionClone = game.Players.LocalPlayer.Character.Collision:Clone() do
 collisionClone.CanCollide = false
 collisionClone.Massless = true
@@ -477,7 +477,7 @@ _G.AntiSnare = v
 end)
 Anti:Toggle("Anti-Dupe",false,function(v)
 _G.AntiDupe = v
-while _G.AntiDupe do wait(0.1)
+while _G.AntiDupe do wait(0.25)
 for _, v in (workspace:GetDescendants()) do
 if v.Name == "DoorFake" and v:IsA("Model") then
 v.Hidden.CanTouch = not _G.AntiDupe
@@ -554,17 +554,6 @@ end)
 end)
 Anti:Toggle("Anti-Giggle",false,function(v)
 _G.AntiGiggle = v
-end)
-game:GetService("RunService").RenderStepped:Connect(function()
-pcall(function()
-if _G.AntiGloomEggs then
-for _, room in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetChildren()) do
-if room.Name == "GloomPile" then
-room.Egg.CanTouch = false
-end
-end
-end
-end)
 end)
 Anti:Toggle("Anti-Gloom Eggs",false,function(v)
 _G.AntiGloomEggs = v
@@ -1144,6 +1133,76 @@ end
 end
 end
 end)
+ESP:Toggle("Dupe",false,function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "DoorFake" then
+LibraryESP:AddESP(v,"Dupe",Color3.fromRGB(255, 0, 0),25,"DupeESP")
+end		
+end					                
+DupeESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "DoorFake" then
+LibraryESP:AddESP(v,"Dupe",Color3.fromRGB(255, 0, 0),25,"DupeESP")
+end		
+end			
+end)
+else
+DupeESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "DupeESP" then
+v:Destroy()
+end
+end
+end
+end)
+ESP:Toggle("Anchor",false,function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesAnchor" then
+LibraryESP:AddESP(v,"Anchor",Color3.fromRGB(255, 0, 255),25,"AnchorESP")
+end		
+end					                
+AnchorESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesAnchor" then
+LibraryESP:AddESP(v,"Anchor",Color3.fromRGB(255, 0, 255),25,"AnchorESP")
+end		
+end		
+end)
+else
+AnchorESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "AnchorESP" then
+v:Destroy()
+end
+end
+end
+end)
+ESP:Toggle("Anchor",false,function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "WaterPump" then
+LibraryESP:AddESP(v,"Water Pump",Color3.fromRGB(255, 0, 255),25,"PumpESP")
+end		
+end					                
+PumpESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "WaterPump" then
+LibraryESP:AddESP(v,"Water Pump",Color3.fromRGB(255, 0, 255),25,"PumpESP")
+end		
+end		
+end)
+else
+PumpESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "PumpESP" then
+v:Destroy()
+end
+end
+end
+end)
+
 ESP:Toggle("Rooms Lockers",false,function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
@@ -1230,7 +1289,7 @@ LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
 elseif v.Name == "FigureRagdoll" then
 LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
 elseif v.Name == "GiggleCeiling" then
-LibraryESP:AddESP(v.Handle,"Giggle",Color3.fromRGB(255, 255, 255),25,"GiggleESP")
+LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),25,"GiggleESP")
 elseif v.Name == "Grumbo" then
 LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),25,"GrumbleESP")
 elseif v.Name == "A60" then
@@ -1283,7 +1342,7 @@ LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
 elseif v.Name == "FigureRagdoll" then
 LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
 elseif v.Name == "GiggleCeiling" then
-LibraryESP:AddESP(v.Handle,"Giggle",Color3.fromRGB(255, 255, 255),25,"GiggleESP")
+LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),25,"GiggleESP")
 elseif v.Name == "Grumbo" then
 LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),25,"GrumbleESP")
 elseif v.Name == "Snare" then
