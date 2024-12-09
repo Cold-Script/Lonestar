@@ -745,7 +745,20 @@ fog.Density = v and 0 or fog:GetAttribute("Density")
 end
 end)
 end)
-Lighting:Seperator("FPS Booster")
+Lighting:Seperator("Other")
+game:GetService("RunService").RenderStepped:Connect(function()
+for _,v in pairs(game.workspace:GetDescendants()) do
+if _G.RemoveSeek then
+if v:IsA("Model") and v.Name == "TriggerEventCollision" then
+v.Collision.CanTouch = false
+v:Destroy()
+end
+end
+end
+end)
+Lighting:Toggle("Delete Seek Chase",false,function(v)
+_G.RemoveSeek = v
+end)
 Lighting:Toggle("Low Quality",false,function(v)
 if v then
 for _, object in pairs(workspace:GetDescendants()) do
